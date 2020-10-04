@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+
+{% block title%}Login{% endblock %}
+
+{% block content%}
+<i class="fab fa-angellist"></i>
+
+<div class="card" style="width: 28rem;">
+    <div class="card-body">
+        <h5 class="card-title">Zaloguj się</h5>
+        <form method="POST">
+            <table>
+                {% csrf_token %}
+                {{ form|bootstrap }}
+            </table>
+            <button type="submit" class="btn btn-primary">Login!<i class="fas fa-sign-in-alt"></i></button>
+        </form>
+    </div>
+</div>
+{% endblock %}

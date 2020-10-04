@@ -1,3 +1,22 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 # Create your models here.
+class Gossip(models.Model):
+    content = models.TextField(max_length=200)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    photo = models.ImageField(upload_to="gossip_picture", null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    good_one = models.PositiveSmallIntegerField(default=0)
+    title = models.CharField(max_length=25)
+
+
+class Mesage(models.Model):
+    title = models.CharField(max_length=35)
+    content = models.TextField(max_length=600)
+    sender = models.ForeignKey(get_user_model(), related_name="sender", on_delete=models.SET_NULL, null=True,)
+    receiver = models.ForeignKey(get_user_model(), related_name="receiver", on_delete=models.SET_NULL, null=True,)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+
