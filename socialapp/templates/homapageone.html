@@ -21,12 +21,12 @@
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container">
 
-                    <a href="{% url 'userpage' user.pk %}"><h4 class="w3-center">{{ user.username }}</h4></a>
+                    <a href="{% url 'userpage' user.pk %}"><h4 class="w3-center">{{ user.get_full_name }}</h4></a>
                     <p class="w3-center">{% avatar user 210 %}</p>
                     <hr>
-                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.bio }}</p>
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.location }}</p>
+                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.birth_date }}</p>
                 </div>
             </div>
             <br>
@@ -113,7 +113,7 @@
                             <form action="{% url 'homepage' %}" method="POST" enctype='multipart/form-data'>
                                 {% csrf_token %}
                                 <h5 class="mt-0">I heard that {{ form.title }} - write your title</h5>
-                                <p contenteditable="true" class="w3-border w3-padding">{{ form.content }} What did you
+                                <p contenteditable="true" id="id_content_gossip" class="w3-border w3-padding">{{ form.content }} What did you
                                     heard? {{ form.photo }}</p>
                                 <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i> Spread
                                     Gossip!
@@ -177,19 +177,23 @@
 
         <div class="w3-col m2">
             <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+
         <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
           <i class="fa fa-remove"></i>
         </span>
                 <p><strong>Hey!</strong></p>
-                <form action="{% url 'notihomepage' %}" method="POST" enctype='multipart/form-data'>
-                    {% csrf_token %}
+
                     {% for i in noti %}
                     <p>{{ i.content }}</p>
+                <hr>
                     {% endfor %}
+                    <form action="{% url 'notihomepage' %}" method="POST" enctype='multipart/form-data'>
+                        {% csrf_token %}
                     Check me if you read this {{ noti_form }}
                     <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>Thx!</button>
                 </form>
             </div>
+
             <div class="w3-card w3-round w3-white w3-center">
                 <div class="w3-container">
                     <p>Your weather in {{ weather.city }}</p>

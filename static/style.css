@@ -11,3 +11,7 @@ body {
   margin-right: auto;
   width: 50%;
 }
+#id_content_gossip {
+    width: 300px;
+    height: 200px;
+}

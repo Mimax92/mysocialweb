@@ -53,9 +53,6 @@ class HomePageView(View, LoginRequiredMixin):
         form = GossipForm(request.POST or None, request.FILES or None)
         noti = Notification.objects.filter(receiver=request.user, read=False)
         noti_form = Notiform()
-        # gossip_voted = Gossip.objects.get(pk=form.id))
-        # if 'add' in request.POST:
-        #     new_like, created = Like.objects.get_or_create(user=request.user, gossip_id=)
         if form.is_valid():
             if request.user.is_authenticated:
                 Gossip.objects.create(**form.cleaned_data, user=request.user)
@@ -118,7 +115,7 @@ class SendMesageView(View, LoginRequiredMixin):
             Mesage.objects.create(**form.cleaned_data, sender=request.user)
             receiver_not = form.cleaned_data["receiver"]
             Notification.objects.create(sender=request.user, receiver=receiver_not,
-                                        content=f'{request.user.username} send you Mesage!!')
+                                        content=f'{request.user.first_name} {request.user.last_name} send you Mesage!!')
             form = MessageForm()
         ctx = {
             "form": form,
@@ -147,17 +144,19 @@ class CreateUserView(View):
 
 class NotificationView(View):
     def post(self, request):
+        weather = weather_city(self, request.user.profile.location)
         gossips = Gossip.objects.all().order_by("-id")
         noti = Notification.objects.filter(receiver=request.user, read=False)
         form = GossipForm(request.POST or None, request.FILES or None)
         if request.POST.get('read') is not None:
             noti.update(read=True)
         return render(request, "homapageone.html",
-                      {"form": form, "gossips": gossips, "noti": noti})
+                      {"form": form, "gossips": gossips, "noti": noti, 'weather': weather})
 
 
 class LikeView(View):
     def post(self, request, pk):
+        weather = weather_city(self, request.user.profile.location)
         gossips = Gossip.objects.all().order_by("-id")
         noti = Notification.objects.filter(receiver=request.user, read=False)
         gos_com_id = pk
@@ -181,6 +180,9 @@ class LikeView(View):
             "noti_form": noti_form,
             "comment_form": comment_form,
             "gos_com_id": gos_com_id,
+            "weather": weather,
+            "form": form,
+
         }
         return render(request, "homapageone.html", ctx)
 

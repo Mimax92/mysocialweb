@@ -29,7 +29,7 @@ router.register(r'users', UserView)
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', HomePageView.as_view(), name="homepage"),
-                  path('', NotificationView.as_view(), name="notihomepage"),
+                  path('noti/', NotificationView.as_view(), name="notihomepage"),
                   path('<int:pk>', LikeView.as_view(), name="likehomepage"),
                   path('login/', auth_views.LoginView.as_view(), name="login"),
                   path('logout/', auth_views.LogoutView.as_view(), name="logout"),

@@ -20,12 +20,13 @@
             <!-- Profile -->
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container">
-                    <h4 class="w3-center">{{ user.username }}</h4>
+                    <h4 class="w3-center">{{ user.get_full_name }}</h4>
                     <p class="w3-center">
                     <p class="w3-center">{% avatar user 210 %}</p>></p>
                     <hr>
-                    <h2>{{ user.get_full_name }}</h2>
+                    <h2>{{ user.first_name }}</h2>
                     <ul>
+
                         <li>Username: {{ user.username }}</li>
                         <li>Location: {{ user.profile.location }}</li>
                         <li>Birth Date: {{ user.profile.birth_date }}</li>
@@ -36,7 +37,6 @@
                 </div>
             </div>
             <br>
-
             <!-- Accordion -->
             <div class="w3-card w3-round">
                 <div class="w3-white">
