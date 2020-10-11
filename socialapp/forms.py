@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.contrib.auth import get_user_model
+from .models import Profile
 
 
 class GossipForm(forms.Form):
@@ -39,3 +40,15 @@ class Notiform(forms.Form):
 
 class CommentForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label='comment', max_length=200)
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'location', 'birth_date')
+

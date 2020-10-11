@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'socialapp',
     'bootstrapform',
     'avatar',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

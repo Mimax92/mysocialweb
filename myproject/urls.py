@@ -18,7 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from socialapp.views import HomePageView, UserPageView, SendMesageView, CreateUserView, NotificationView, LikeView
+from socialapp.views import HomePageView, UserPageView, SendMesageView, CreateUserView, NotificationView, LikeView, update_profile
+from rest_framework import routers
+from socialapp.views import UserView
+
+router = routers.DefaultRouter()
+router.register(r'users', UserView)
+
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -31,4 +37,6 @@ urlpatterns = [
                   path('mesage/', SendMesageView.as_view(), name="mesage"),
                   path('avatar/', include('avatar.urls')),
                   path('createuser/', CreateUserView.as_view(), name="createuser"),
+                  path('updateuser/', update_profile, name="updateuser"),
+                  path('', include(router.urls)),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
