@@ -8,7 +8,6 @@ class Gossip(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     photo = models.ImageField(upload_to="gossip_picture", null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    good_one = models.PositiveSmallIntegerField(default=0)
     title = models.CharField(max_length=25)
 
 
@@ -19,4 +18,28 @@ class Mesage(models.Model):
     receiver = models.ForeignKey(get_user_model(), related_name="receiver", on_delete=models.SET_NULL, null=True,)
     timestamp = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+class Notification(models.Model):
+    content =  models.TextField(max_length=200)
+    sender = models.ForeignKey(get_user_model(), related_name="sender_not", on_delete=models.SET_NULL, null=True)
+    receiver = models.ForeignKey(get_user_model(), related_name="receiver_not", on_delete=models.SET_NULL, null=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    gossip = models.ForeignKey(Gossip, on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    content = models.TextField(max_length=200)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    gossip = models.ForeignKey(Gossip, on_delete=models.CASCADE, null=True)
+
+    
 

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+
+{% block title%}Login{% endblock %}
+
+{% block content%}
+
+
+<div class="card" style="width: 28rem; float: left;" >
+    <div class="card-body">
+        <h5 class="card-title">Send Mesage</h5>
+        <form method="POST">
+            <table>
+                {% csrf_token %}
+                {{ form.receiver }}
+                {{ form.title }}
+                {{ form.content }}
+
+            </table>
+            <button type="submit" class="btn btn-primary">Send<i class="fas fa-sign-in-alt"></i></button>
+        </form>
+    </div>
+</div>
+ {% for i in user_mesage %}
+<div class="card">
+  <h5 class="card-header">Mesage from: {{ i.sender }}</h5>
+    <p>{{ i.creation_date }}</p>
+  <div class="card-body">
+      {% if i.read == False %}
+        <p>Unread</p>
+      {% else %}
+        <p>Read</p>
+      {% endif %}
+    <h5 class="card-title">Title: {{ i.title }}</h5>
+    <p class="card-text">{{ i.content }}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+                {% endfor %}
+{% endblock %}

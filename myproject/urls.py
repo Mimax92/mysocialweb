@@ -13,17 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import path, include
 from django.contrib import admin
-from django.urls import path
-from socialapp.views import HomePageView, UserPageView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from socialapp.views import HomePageView, UserPageView, SendMesageView, CreateUserView, NotificationView, LikeView
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', HomePageView.as_view(), name="homepage"),
+                  path('', NotificationView.as_view(), name="notihomepage"),
+                  path('<int:pk>', LikeView.as_view(), name="likehomepage"),
                   path('login/', auth_views.LoginView.as_view(), name="login"),
                   path('logout/', auth_views.LogoutView.as_view(), name="logout"),
-                  path('profile/<int:pk>', UserPageView.as_view(), name="userpage")
+                  path('profile/<int:pk>', UserPageView.as_view(), name="userpage"),
+                  path('mesage/', SendMesageView.as_view(), name="mesage"),
+                  path('avatar/', include('avatar.urls')),
+                  path('createuser/', CreateUserView.as_view(), name="createuser"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
