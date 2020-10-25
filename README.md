@@ -44,7 +44,7 @@ and more :)
 
 10. Password change by user view
 
-![](readmeimg/change password.png)
+![](readmeimg/change_password.png)
 
 
 Homepage View
