@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+
+{% block title%}Login{% endblock %}
+
+{% block content%}
+
+
+<form action="" method="POST">
+            <h5 class="card-title"><p> Are you sure you want to this photo ?</p></h5>
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delate">
+        </form>
+<img src="/media/{{ photo.photo }}" class="center" style="width: 220px"
+                                 class="w3-margin-bottom">
+{% endblock %}

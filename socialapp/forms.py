@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.contrib.auth import get_user_model
-from .models import Profile
+from .models import Profile, UserImage
 
 
 class GossipForm(forms.Form):
@@ -14,8 +14,6 @@ class GossipForm(forms.Form):
     title = forms.CharField(max_length=25)
 
 class MessageForm(forms.Form):
-    # def __init__(self, user, *args, **kwargs):
-    #
     title = forms.CharField(max_length=35, label='Title')
     content = forms.CharField(widget=forms.Textarea, label='Content')
     receiver = forms.ModelChoiceField(queryset=User.objects.all(),
@@ -34,8 +32,9 @@ class CreateUserForm(forms.Form):
     email = forms.EmailField(validators=[EmailValidator()])
 
 
+
 class Notiform(forms.Form):
-    read = forms.BooleanField()
+    read = forms.BooleanField(widget=forms.HiddenInput())
 
 
 class CommentForm(forms.Form):
@@ -51,4 +50,11 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('bio', 'location', 'birth_date')
+
+class AddUserPhotoForm(forms.ModelForm):
+    photo = forms.ImageField(label='Select pictures to upload:',
+                               widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    class Meta:
+        model = UserImage
+        fields = ('photo', )
 

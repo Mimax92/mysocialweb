@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
 class Gossip(models.Model):
     content = models.TextField(max_length=200)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -48,7 +47,7 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
+    location = models.CharField(max_length=30, blank=True, default="Warsaw")
     birth_date = models.DateField(null=True, blank=True)
 
     @receiver(post_save, sender=User)
@@ -59,3 +58,9 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+
+class UserImage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=35, null=True, blank=True)
+    photo = models.ImageField(upload_to="user_picture", null=True, blank=True)

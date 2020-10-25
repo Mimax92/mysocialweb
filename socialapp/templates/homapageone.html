@@ -22,11 +22,12 @@
                 <div class="w3-container">
 
                     <a href="{% url 'userpage' user.pk %}"><h4 class="w3-center">{{ user.get_full_name }}</h4></a>
-                    <p class="w3-center">{% avatar user 210 %}</p>
+                    <p class="w3-center">{% avatar user 223 %}</p>
                     <hr>
                     <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.bio }}</p>
                     <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.location }}</p>
-                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{ user.profile.birth_date }}</p>
+                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>
+                        {{ user.profile.birth_date }}</p>
                 </div>
             </div>
             <br>
@@ -34,70 +35,22 @@
             <!-- Accordion -->
             <div class="w3-card w3-round">
                 <div class="w3-white">
-                    <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i
-                            class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups
-                    </button>
-                    <div id="Demo1" class="w3-hide w3-container">
-                        <p>Some text..</p>
-                    </div>
-                    <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i
-                            class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events
-                    </button>
-                    <div id="Demo2" class="w3-hide w3-container">
-                        <p>Some other text..</p>
-                    </div>
-                    <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i
+                         <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i
                             class="fa fa-users fa-fw w3-margin-right"></i> My Photos
                     </button>
                     <div id="Demo3" class="w3-hide w3-container">
                         <div class="w3-row-padding">
                             <br>
+                            {% for pht in user.userimage_set.all %}
                             <div class="w3-half">
-                                <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
+                                <img src="/media/{{ pht.photo }}" style="width:100%" class="w3-margin-bottom">
                             </div>
-                            <div class="w3-half">
-                                <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                            </div>
-                            <div class="w3-half">
-                                <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-                            </div>
-                            <div class="w3-half">
-                                <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-                            </div>
-                            <div class="w3-half">
-                                <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                            </div>
-                            <div class="w3-half">
-                                <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
             <br>
-
-            <!-- Interests -->
-            <div class="w3-card w3-round w3-white w3-hide-small">
-                <div class="w3-container">
-                    <p>Interests</p>
-                    <p>
-                        <span class="w3-tag w3-small w3-theme-d5">News</span>
-                        <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                        <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                        <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                        <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                        <span class="w3-tag w3-small w3-theme">Games</span>
-                        <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                        <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                        <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                        <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                        <span class="w3-tag w3-small w3-theme-l5">Photos</span>
-                    </p>
-                </div>
-            </div>
-            <br>
-
-            <!-- Alert Box -->
 
 
             <!-- End Left Column -->
@@ -113,7 +66,8 @@
                             <form action="{% url 'homepage' %}" method="POST" enctype='multipart/form-data'>
                                 {% csrf_token %}
                                 <h5 class="mt-0">I heard that {{ form.title }} - write your title</h5>
-                                <p contenteditable="true" id="id_content_gossip" class="w3-border w3-padding">{{ form.content }} What did you
+                                <p contenteditable="true" id="id_content_gossip" class="w3-border w3-padding">
+                                    {{ form.content }} What did you
                                     heard? {{ form.photo }}</p>
                                 <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i> Spread
                                     Gossip!
@@ -125,24 +79,26 @@
             </div>
 
             {% for gossip in gossips %}
-            <form action="{% url 'likehomepage' gossip.id %}" method="POST" enctype='multipart/form-data'>
+            <form action="{% url 'likehomepage' gossip.id %}#form-{{ gossip.id }}" method="POST" enctype='multipart/form-data' id="form-{{ gossip.id }}">
                 {% csrf_token %}
                 <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-                    <div alt="Avatar" class="w3-left w3-circle w3-margin-right">{% avatar gossip.user 60 %}</div>
+                    <div alt="Avatar" class="w3-left w3-circle w3-margin-right">{% avatar gossip.user 62 %}</div>
                     <span class="w3-right w3-opacity">{{ gossip.creation_date }}</span>
                     <h4>{{ gossip.user }} heard that {{ gossip.title }}</h4><br>
                     <hr class="w3-clear">
                     <p>{{ gossip.content }}</p>
                     <div class="w3-row-padding" style="margin:0 -16px">
-                        {% if gossip.photo is None %}
-                        {% else %}
+                        {% if gossip.photo %}
                         <div class="w3-half">
-                            <img src="/media/{{ gossip.photo }}" class="center" style="width:200px" a
+                            <img src="/media/{{ gossip.photo }}" class="center" style="width: 220px"
                                  class="w3-margin-bottom">
                         </div>
+                        {% else %}
+
+
                         {% endif %}
                     </div>
-                    {{ gossip.like_set.count }}
+                    <p class="btn btn-success w3-margin-bottom"> {{ gossip.like_set.count }} person like this</p>
                     <button name="add" type="submit" class="w3-button w3-theme-d1 w3-margin-bottom"><i
                             class="fa fa-thumbs-up"></i> Like
                     </button>
@@ -154,11 +110,12 @@
                     </button>
                     {% for com in gossip.comment_set.all %}
                     <hr>
-                    <ul>{{ com.user }}</ul>
+                    <ul>{{ com.user }} {% avatar com.user 30 %}</ul>
                     <ul>{{ com.content }}</ul>
                     <hr>
                     {% endfor %}
                     {% if comment_form and gossip.id == gos_com_id %}
+                    <p id="scrollhere" > </p>
                     <form action="{% url 'likehomepage' gossip.id %}" method="POST" enctype='multipart/form-data'>
                         {{ comment_form }}
                         {% csrf_token %}
@@ -176,64 +133,60 @@
         <!-- Right Column -->
 
         <div class="w3-col m2">
-            <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+<!--            <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">-->
 
-        <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
-          <i class="fa fa-remove"></i>
-        </span>
-                <p><strong>Hey!</strong></p>
+<!--        <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">-->
+<!--          <i class="fa fa-remove"></i>-->
+<!--        </span>-->
+<!--                <p><strong>Hey!</strong></p>-->
 
-                    {% for i in noti %}
-                    <p>{{ i.content }}</p>
-                <hr>
-                    {% endfor %}
-                    <form action="{% url 'notihomepage' %}" method="POST" enctype='multipart/form-data'>
-                        {% csrf_token %}
-                    Check me if you read this {{ noti_form }}
-                    <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i>Thx!</button>
-                </form>
-            </div>
+
+<!--                <form action="{% url 'notihomepage' %}" method="POST" enctype='multipart/form-data'>-->
+<!--                    {% csrf_token %}-->
+<!--                    Check me if you read this {{ noti_form }}-->
+<!--                    <button type="submit" class="w3-button w3-theme"><i class="fa fa-pencil"></i></button>-->
+<!--                </form>-->
+<!--            </div>-->
 
             <div class="w3-card w3-round w3-white w3-center">
                 <div class="w3-container">
                     <p>Your weather in {{ weather.city }}</p>
-                    <i class="fas fa-temperature-low"></i>
-                    <p><strong>{{ weather.temperature }} Celsius</strong></p>
-                    <p>{{ weather.description }}</p>
+                    <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png">
+                    <p><strong><i class="fas fa-temperature-low"></i>{{ weather.temperature }} Celsius</strong></p>
                     <p>
-                        <button class="w3-button w3-block w3-theme-l4">Info</button>
+                        <p class="w3-button w3-block w3-theme-l4">{{ weather.description }}</p>
                     </p>
                 </div>
             </div>
             <br>
 
-            <div class="w3-card w3-round w3-white w3-center">
-                <div class="w3-container">
-                    <p>Friend Request</p>
-                    <img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
-                    <span>Jane Doe</span>
-                    <div class="w3-row w3-opacity">
-                        <div class="w3-half">
-                            <button class="w3-button w3-block w3-green w3-section" title="Accept"><i
-                                    class="fa fa-check"></i></button>
-                        </div>
-                        <div class="w3-half">
-                            <button class="w3-button w3-block w3-red w3-section" title="Decline"><i
-                                    class="fa fa-remove"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
+<!--            <div class="w3-card w3-round w3-white w3-center">-->
+<!--                <div class="w3-container">-->
+<!--                    <p>Friend Request</p>-->
+<!--                    <img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>-->
+<!--                    <span>Jane Doe</span>-->
+<!--                    <div class="w3-row w3-opacity">-->
+<!--                        <div class="w3-half">-->
+<!--                            <button class="w3-button w3-block w3-green w3-section" title="Accept"><i-->
+<!--                                    class="fa fa-check"></i></button>-->
+<!--                        </div>-->
+<!--                        <div class="w3-half">-->
+<!--                            <button class="w3-button w3-block w3-red w3-section" title="Decline"><i-->
+<!--                                    class="fa fa-remove"></i></button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <br>-->
 
-            <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
-                <p>ADS</p>
-            </div>
-            <br>
+<!--            <div class="w3-card w3-round w3-white w3-padding-16 w3-center">-->
+<!--                <p>ADS</p>-->
+<!--            </div>-->
+<!--            <br>-->
 
-            <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
-                <p><i class="fa fa-bug w3-xxlarge"></i></p>
-            </div>
+<!--            <div class="w3-card w3-round w3-white w3-padding-32 w3-center">-->
+<!--                <p><i class="fa fa-bug w3-xxlarge"></i></p>-->
+<!--            </div>-->
 
             <!-- End Right Column -->
         </div>

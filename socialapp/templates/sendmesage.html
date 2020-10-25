@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% load bootstrap %}
-
+{% load avatar_tags %}
 
 {% block title%}Login{% endblock %}
 
 {% block content%}
+<div class="container">
 
-
-<div class="card" style="width: 28rem; float: left;" >
+  <div class="row">
+    <div class="col-8">
+        <div class="card" style="width: 28rem; float: left;" >
     <div class="card-body">
         <h5 class="card-title">Send Mesage</h5>
         <form method="POST">
@@ -21,21 +23,38 @@
             <button type="submit" class="btn btn-primary">Send<i class="fas fa-sign-in-alt"></i></button>
         </form>
     </div>
-</div>
- {% for i in user_mesage %}
-<div class="card">
-  <h5 class="card-header">Mesage from: {{ i.sender }}</h5>
-    <p>{{ i.creation_date }}</p>
+</div></div>
+
+    <div class="col-4">{% for i in user_mesage %}
+        <form action="{% url 'readmesage' i.id %}" method="POST" >
+
+
+
+<div class="card" style="width: 48rem;>
+  <h5 class="card-header">Mesage from: {{ i.sender }}{% avatar i.sender 37 %}</h5>
+            <hr>
+    <p>Date: {{ i.creation_date }}</p>
+            <hr>
   <div class="card-body">
+      {% csrf_token %}
       {% if i.read == False %}
         <p>Unread</p>
       {% else %}
         <p>Read</p>
       {% endif %}
+      <hr>
     <h5 class="card-title">Title: {{ i.title }}</h5>
+      <hr>
     <p class="card-text">{{ i.content }}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+      <hr>
+    <button name="read" class="btn btn-primary">Readed</button>
+  </form>
   </div>
 </div>
-                {% endfor %}
+                {% endfor %}</div>
+  </div>
+</div>
+
+
+
 {% endblock %}

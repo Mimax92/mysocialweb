@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+
+{% block title%}Login{% endblock %}
+
+{% block content%}
+{%for i in photo %}
+<img src="/media/{{ i.photo }}" class="center" style="width: 220px"
+                                 class="w3-margin-bottom">
+<a href="{% url 'del-photo' i.id %}">
+            <i class="fas fa-trash-alt"></i></a>
+{% endfor %}
+<form action="{% url 'adduserphoto' %}" method="POST" enctype="multipart/form-data">
+    <table>
+        {% csrf_token %}
+        {{ add_image|bootstrap }}
+    </table>
+    <input type="submit" value="Add photo!">
+</form>
+{% endblock %}

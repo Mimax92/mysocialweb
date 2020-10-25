@@ -4,10 +4,28 @@
 {% block content %}
 {% load avatar_tags %}
 
+<h1> Hello {{ user.name }} tell ass something about your self</h1>
+
+
+
+<a href="{% url 'avatar_change' %}">Set up your avatar</a>
 <form action="{% url 'updateuser' %}" method="POST">
   {% csrf_token %}
   {{ user_form.as_p }}
   {{ profile_form.as_p }}
+  <div class="card" style="width: 18rem;">
+  <div class="card-header">
+    <a class = 'm-auto' href="{% url 'password_change' %}">Change password</a>
+  </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    <a class = 'm-auto' href="{% url 'password_reset' %}">Reset password</a>
+  </div>
+</div>
   <button type="submit">Save changes</button>
+
 </form>
+
+
 {% endblock %}
