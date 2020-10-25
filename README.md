@@ -6,7 +6,7 @@ Functionalities
 3. Adding posts 
 4. Ability to like and unlike posts 
 5. Possibility to comment on posts by other users.
-![](readmeimg/add post.png)
+![](readmeimg/add_post.png)
 6. Send a message
 ![](readmeimg/mes.png)
 7. Notifications
