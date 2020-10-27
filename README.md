@@ -1,7 +1,7 @@
 # mysocialweb
 Hi,
 this is my second website.
-Django, Python
+Django, Python, PostgreSQL
 
 Functionalities (below you can find screens from page)
 1. Login and user creation
