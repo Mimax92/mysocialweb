@@ -199,6 +199,8 @@ class NotificationView(View, LoginRequiredMixin):
                       {"form": form, "gossips": gossips, "noti": noti, 'weather': weather})
 
 
+
+
 class LikeView(View, LoginRequiredMixin):
     def post(self, request, pk):
         weather = weather_city(self, request.user.profile.location)
