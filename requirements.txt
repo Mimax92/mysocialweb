@@ -7,12 +7,14 @@ django-avatar==5.0.0
 django-bootstrap-form==3.4
 django-cleanup==5.1.0
 djangorestframework==3.12.1
+gunicorn==20.0.4
 idna==2.10
 Pillow==7.2.0
 pkg-resources==0.0.0
 predicthq==1.4.0
 psycopg2-binary==2.8.6
 python-dateutil==2.8.1
+python-decouple==3.3
 pytz==2017.2
 requests==2.24.0
 schematics==2.0.0.dev2
