@@ -3,7 +3,9 @@ Hi,
 this is my second website.
 Django, Python, PostgreSQL
 
+It's deploy on Heroku server(because i am using trial server, photos display may not working properly (DB is cleaing from img files ech 30 minutes).
 https://fathomless-springs-67545.herokuapp.com/
+
 
 Functionalities (below you can find screens from page)
 1. Login and user creation
