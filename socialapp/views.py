@@ -182,7 +182,7 @@ class CreateUserView(View):
                                     password=form.cleaned_data['password'],
                                     )
             login(request, new_user)
-            return redirect("/updateuser/")
+            return redirect("/")
         return render(request, "createuser.html", {"form": form})
 
 
